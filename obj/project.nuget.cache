@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "hpxDO3gwVlzLQQDSfZMTHrhFcAhXNjjTXcm0BtWLuoeh+cmF7QmSrpub9g7ERg+PJ3EspzZ7q00p9xxWNrQibQ==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\buged\\Desktop\\Internship\\Restaurant\\Restaurant\\Restaurant.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\buged\\.nuget\\packages\\csvhelper\\18.0.0\\csvhelper.18.0.0.nupkg.sha512",
+    "C:\\Users\\buged\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512"
+  ],
+  "logs": []
+}
