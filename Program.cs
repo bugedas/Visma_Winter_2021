@@ -368,7 +368,7 @@ namespace Restaurant
                     Console.Write(">>> ");
                     string tmpName = Console.ReadLine();
 
-                    Console.WriteLine("Product portion count:");
+                    Console.WriteLine("Product portion count(must be an integer):");
                     Console.Write(">>> ");
                     string tmpPortionCount = Console.ReadLine();
 
@@ -399,11 +399,37 @@ namespace Restaurant
                     Console.Write(">>> ");
                     string tmpProducts = Console.ReadLine();
 
+                    int howManyCorrect = 0;
+                    Stocks = p.ReadAllStock(false);
+                    string[] prdcts = tmpProducts.Split(' ');
 
-                    int cnt = p.getLinesCount("../../../data/Menu.csv");
+                    for(int i = 0; i < prdcts.Length; i++)
+                    {
+                        
+                        foreach (Stock s in Stocks)
+                        {
+                            if (s.id == prdcts[i])
+                            {
+                                howManyCorrect++;
+                            }
+                        }
+                    }
+                    
+                    if(howManyCorrect == prdcts.Length)
+                    {
+                        int cnt = p.getLinesCount("../../../data/Menu.csv");
 
-                    string line = string.Format("{0},{1},{2}", cnt.ToString(), tmpName, tmpProducts);
-                    p.addLine(line, "../../../data/Menu.csv");
+                        string line = string.Format("{0},{1},{2}", cnt.ToString(), tmpName, tmpProducts);
+                        p.addLine(line, "../../../data/Menu.csv");
+                    }
+
+                    else
+                    {
+                        Console.WriteLine("------------------------------------------------------------------------------");
+                        Console.WriteLine("Some product ID's were not found in stock");
+                    }
+
+                    
 
                 }
 
@@ -441,6 +467,7 @@ namespace Restaurant
                 {
                     Stocks = p.ReadAllStock(false);
                     int counter = 0;
+                    bool found = false;
 
                     Console.WriteLine("ID of the item you want to update:");
                     Console.Write(">>> ");
@@ -451,6 +478,7 @@ namespace Restaurant
                         counter++;
                         if (s.id == tmpId)
                         {
+                            found = true;
                             Console.WriteLine("Change name of the product(leave blank to not change):");
                             Console.Write(">>> ");
                             string tmpName = Console.ReadLine();
@@ -489,12 +517,19 @@ namespace Restaurant
                         }
                     }
 
+                    if (found == false)
+                    {
+                        Console.WriteLine("------------------------------------------------------------------------------");
+                        Console.WriteLine("Could not update. ID not found");
+                    }
+
                 }
 
                 else if (string.Equals(x, "UPDATE MENU", StringComparison.CurrentCultureIgnoreCase))
                 {
                     Menus = p.ReadAllMenu(false);
                     int counter = 0;
+                    bool found = false;
 
                     Console.WriteLine("ID of the item you want to update:");
                     Console.Write(">>> ");
@@ -505,6 +540,7 @@ namespace Restaurant
                         counter++;
                         if (s.id == tmpId)
                         {
+                            found = true;
                             Console.WriteLine("Change name of the meal(leave blank to not change):");
                             Console.Write(">>> ");
                             string tmpName = Console.ReadLine();
@@ -527,6 +563,11 @@ namespace Restaurant
 
                         }
                     }
+                    if(found == false)
+                    {
+                        Console.WriteLine("------------------------------------------------------------------------------");
+                        Console.WriteLine("Could not update. ID not found");
+                    }
                 }
 
                 //----------------- Removing data ---------------------
@@ -542,18 +583,28 @@ namespace Restaurant
                     string tmpId = Console.ReadLine();
 
                     int counter = 0;
+                    bool found = false;
 
                     foreach(Stock s in Stocks)
                     {
                         if(s.id == tmpId)
                         {
+                            found = true;
                             break;
                         }
                         counter++;
                     }
 
-
-                    p.RemoveLine(counter, "../../../data/Stock.csv");
+                    if (found == true)
+                    {
+                        p.RemoveLine(counter, "../../../data/Stock.csv");
+                    }
+                    else
+                    {
+                        Console.WriteLine("------------------------------------------------------------------------------");
+                        Console.WriteLine("Could not remove. ID not found");
+                    }
+                    
 
                 }
 
@@ -568,18 +619,30 @@ namespace Restaurant
                     string tmpId = Console.ReadLine();
 
                     int counter = 0;
+                    bool found = false;
 
                     foreach (Menu s in Menus)
                     {
                         if (s.id == tmpId)
                         {
+                            found = true;
                             break;
                         }
                         counter++;
                     }
 
+                    if (found == true)
+                    {
+                        p.RemoveLine(counter, "../../../data/Menu.csv");
+                    }
 
-                    p.RemoveLine(counter, "../../../data/Menu.csv");
+                    else
+                    {
+                        Console.WriteLine("------------------------------------------------------------------------------");
+                        Console.WriteLine("Could not remove. ID not found");
+                    }
+
+
 
                 }
 
